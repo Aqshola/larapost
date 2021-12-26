@@ -2,18 +2,23 @@
 
 @section('container')
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-3 mb-2">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
+    <div class="container p-0">
+        <h1 class="p-0">{{ $title }}</h1>
+        <div class="row mt-5 p-2">
+            @foreach ($posts as $post)
+                <div class="col-12 mb-2 border-bottom p-0 pb-4 ">
+                    <h2>
+                        <a href="/post/{{ $post->slug }}" class="text-decoration-none">{{ $post->title }}</a>
+                    </h2>
+                    <p>By <a href="/post/author/{{ $post->user->username }}">{{ $post->user->name }}</a>
+                        {{ $post->user->name }} in <a
+                            href="/category/{{ $post->category->slug }}">{{ $post->category->name }}</a></p>
+                    <p>
+                        {{ $post->excerpt }}
+                    </p>
+                    <a href="/post/{{ $post->slug }}" class="text-decoration-none mt-2">Read more...</a>
                 </div>
-            </div>
+            @endforeach
 
         </div>
 

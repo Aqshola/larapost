@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AuthorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [PostController::class, "index"]);
-Route::get("/post/{slug}", [PostController::class, "postDetail"]);
+Route::get("/post/{post:slug}", [PostController::class, "postDetail"]);
+Route::get("/post/author/{user:username}", [AuthorController::class, "authorPost"]);
+Route::get("/category", [CategoryController::class, "index"]);
+Route::get("/category/{category:slug}", [CategoryController::class, "categoryDetail"]);
+Route::get("/author", [AuthorController::class, "index"]);
