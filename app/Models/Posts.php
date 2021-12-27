@@ -11,6 +11,7 @@ class Posts extends Model
 
     protected $primaryKey = "id";
     protected $fillable = ["title", "excerpt", "body", "slug", "category_id", "user_id"];
+    protected $with = ['category', 'user'];
 
 
     const CREATED_AT = 'created_at';

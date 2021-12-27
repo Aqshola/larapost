@@ -14,8 +14,8 @@
 </head>
 
 <body>
-    @include('partials.navbar')
 
+    @include('partials.navbar')
     <div class="p-4 position-relative py-5" style="min-height: 100vh">
         @yield('container')
     </div>

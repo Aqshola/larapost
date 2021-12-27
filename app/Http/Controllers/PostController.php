@@ -16,7 +16,7 @@ class PostController extends Controller
         // }
         return view("index", [
             "title" => "Semua Post",
-            "posts" => Posts::with(["user", "category"])->latest()->get()
+            "posts" => Posts::latest()->get()
         ]);
     }
 

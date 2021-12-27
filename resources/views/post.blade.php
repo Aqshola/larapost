@@ -1,20 +1,24 @@
 @extends('layouts.layout')
 
 @section('container')
-    <h1 class="fs-1">{{ $post->title }}</h1>
-    <p class="fs-6 text-muted">Created by
-        <a href="/category/{{ $post->user->user_id }}" class="text-decoration-none text-dark">{{ $post->user->name }}</a>
-        in <a href="/category/{{ $post->category->slug }}"
-            class="text-decoration-none text-dark">{{ $post->category->name }}</a>
-    </p>
-    </p>
+    <div class="container position-relative">
+        <h1 class="fs-1">{{ $post->title }}</h1>
+        <small class="fs-6 text-muted">Created by
+            <a href="/category/{{ $post->user->user_id }}" class="text-decoration-none ">{{ $post->user->name }}</a>
+            in <a href="/category/{{ $post->category->slug }}"
+                class="text-decoration-none ">{{ $post->category->name }}</a>
+            {{ $post->created_at->diffForHumans() }}
+        </small>
+        </p>
 
-    <p class="mt-5">{!! $post->body !!}</p>
-    {{-- <a href="/">Back to list</a> --}}
-    <div class="position-fixed bottom-0 end-0 p-2">
-        <button id="scroll-to-top" class="btn shadow-sm btn-primary rounded-full mb-2" onclick="topFunction()">Scroll to
-            top</button>
+        <p class="mt-5">{!! $post->body !!}</p>
+        {{-- <a href="/">Back to list</a> --}}
+        <div class="position-fixed bottom-0 end-0 p-2">
+            <button id="scroll-to-top" class="btn shadow-sm btn-primary rounded-full mb-2" onclick="topFunction()">Scroll to
+                top</button>
+        </div>
     </div>
+
 
 @endsection
 
