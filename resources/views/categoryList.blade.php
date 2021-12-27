@@ -5,10 +5,11 @@
     <div class="container">
         <h1>List category</h1>
 
-        <ul class="list-group">
+        <ul class="list-group mt-5">
             @foreach ($categories as $category)
-                <li class="list-group-item">
-                    <a href="/category/{{ $category->slug }}">{{ $category->name }}</a>
+                <li class="list-group-item border-0 shadow-sm mb-3 p-3">
+                    <a href="/category/{{ $category->slug }}"
+                        class="text-decoration-none text-dark">{{ $category->name }}</a>
                 </li>
             @endforeach
 

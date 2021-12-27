@@ -3,20 +3,68 @@
 @section('container')
 
     <div class="container p-0">
-        <h1 class="p-0">{{ $title }}</h1>
+        <h1 class="p-0 text-center fw-bolder">
+            LaraPost
+        </h1>
+        <h2 class="text-center fw-normal">
+            {{ $title }}
+        </h2>
+
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <div class="row g-0">
+                    <div class="col-md 7">
+                        <div>
+                            <img src="https://picsum.photos/seed/picsum/1000" class="img-thumb w-100 rounded" alt="thumb"
+                                style="height: 300px; object-fit:cover;">
+                        </div>
+
+                    </div>
+                    <div class="col-md-5">
+                        <div class="card-body py-0">
+                            <p style="font-size: 12px" class="text-decoration-none text-muted">By <a
+                                    href="/post/author/{{ $posts[0]->user->username }}"
+                                    class="text-dark text-decoration-none">{{ $posts[0]->user->name }}</a>
+                                in <a href="/category/{{ $posts[0]->category->slug }}"
+                                    class="text-dark text-decoration-none">{{ $posts[0]->category->name }}</a></p>
+
+                            <h2 class="fs-1">
+                                <a href="/post/{{ $posts[0]->slug }}"
+                                    class="text-decoration-none text-dark ">{{ $posts[0]->title }}</a>
+                            </h2>
+
+                            <p>
+                                {{ $posts[0]->excerpt }}
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
         <div class="row mt-5 p-2">
-            @foreach ($posts as $post)
-                <div class="col-12 mb-2 border-bottom p-0 pb-4 ">
-                    <h2>
-                        <a href="/post/{{ $post->slug }}" class="text-decoration-none">{{ $post->title }}</a>
+            @foreach ($posts->slice(1) as $post)
+                <div class="col-md-3 mb-2 border-bottom p-2 pb-4 d-flex flex-column">
+                    <div class="w-100">
+                        <img src="https://picsum.photos/seed/picsum/500" class="img-thumb w-100 rounded" alt="thumb"
+                            style="height: 200px; object-fit:cover;">
+                    </div>
+                    <h2 class="fs-4">
+                        <a href="/post/{{ $post->slug }}" class="text-decoration-none text-dark ">{{ $post->title }}</a>
                     </h2>
-                    <p>By <a href="/post/author/{{ $post->user->username }}">{{ $post->user->name }}</a>
-                        {{ $post->user->name }} in <a
-                            href="/category/{{ $post->category->slug }}">{{ $post->category->name }}</a></p>
-                    <p>
+                    <p style="font-size: 12px" class="text-decoration-none text-muted">By <a
+                            href="/post/author/{{ $post->user->username }}"
+                            class="text-dark text-decoration-none">{{ $post->user->name }}</a>
+                        in <a href="/category/{{ $post->category->slug }}"
+                            class="text-dark text-decoration-none">{{ $post->category->name }}</a></p>
+                    <p class="flex-grow-1">
                         {{ $post->excerpt }}
                     </p>
-                    <a href="/post/{{ $post->slug }}" class="text-decoration-none mt-2">Read more...</a>
+                    <a href="/post/{{ $post->slug }}" class="btn-sm btn-primary text-decoration-none mt-2"
+                        style="width: fit-content">Read
+                        more...</a>
                 </div>
             @endforeach
 
