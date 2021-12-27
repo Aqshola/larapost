@@ -10,13 +10,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>Larapost</title>
 </head>
 
 <body>
     @include('partials.navbar')
 
-    <div class="p-4">
+    <div class="p-4 position-relative py-5" style="min-height: 100vh">
         @yield('container')
     </div>
 

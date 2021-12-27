@@ -8,14 +8,17 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link " aria-current="page" href="/">Home</a>
+                    <a class="nav-link {{ request()->is('/') ? 'active' : '' }} " aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " aria-current="page" href="/category">Category</a>
+                    <a class="nav-link {{ request()->is('category*') ? 'active' : '' }}" aria-current="page"
+                        href="/category">Category</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " aria-current="page" href="/author">Author</a>
+                    <a class="nav-link {{ request()->is('author*') ? 'active' : '' }}" aria-current="page"
+                        href="/author">Author</a>
                 </li>
+
 
             </ul>
         </div>

@@ -49,7 +49,7 @@
                 <div class="col-md-3 mb-2 border-bottom p-2 pb-4 d-flex flex-column">
                     <div class="w-100">
                         <img src="https://picsum.photos/seed/picsum/500" class="img-thumb w-100 rounded" alt="thumb"
-                            style="height: 200px; object-fit:cover;">
+                            style="height: 200px; object-fit:cover;" loading="lazy">
                     </div>
                     <h2 class="fs-4">
                         <a href="/post/{{ $post->slug }}" class="text-decoration-none text-dark ">{{ $post->title }}</a>
