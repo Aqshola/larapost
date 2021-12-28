@@ -1,4 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white">
+<nav id="nav"
+    class="navbar  navbar-expand-lg navbar-light bg-white {{ request()->is('/') ? 'position-sticky top-0' : '' }} "
+    style="z-index: 5">
     <div class="container">
         <a class="navbar-brand text-danger fw-bold" href="/">LaraPost</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -21,6 +23,35 @@
 
 
             </ul>
+            <form class="d-flex" action="/">
+                @if (request('category'))
+                    <input type="hidden" name="category" value="{{ request('category') }}">
+                @endif
+                @if (request('author'))
+                    <input type="hidden" name="author" value="{{ request('author') }}">
+                @endif
+                <input class="form-control me-2" type="search" placeholder="Search" name="search" aria-label="Search">
+                <button class="btn btn-danger" type="submit">Search</button>
+            </form>
         </div>
     </div>
 </nav>
+
+
+<script>
+    window.onscroll = function() {
+        scrollCheck()
+    }
+
+    function scrollCheck(params) {
+        if (
+            document.body.scrollTop > 10 ||
+            document.documentElement.scrollTop > 10
+        ) {
+            document.getElementById('nav').classList.add("shadow-sm");
+        } else {
+            document.getElementById('nav').classList.remove("shadow-sm");
+        }
+
+    }
+</script>

@@ -14,9 +14,17 @@ class PostController extends Controller
         //     echo $post->exercpt;
         //     echo $post->body;
         // }
+
+
+
+        $searchQuery = request('search');
+
+
+
+
         return view("index", [
-            "title" => "Semua Post",
-            "posts" => Posts::latest()->get()
+            "title" => $searchQuery ? 'Hasil pencarian ' . '"' . $searchQuery . '"' : "Semua Post",
+            "posts" => Posts::latest()->filter(request(['search']))->get()
         ]);
     }
 

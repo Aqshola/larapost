@@ -25,11 +25,9 @@ class CategoryController extends Controller
     //BELOM TERAPIN ROUTE BINDING
     public function categoryDetail(Categories $category)
     {
-
-
         return view("index", [
             "title" => "Post by Category " . $category->name,
-            "posts" => $category->post->load('category', 'user')
+            "posts" => $category->post
         ]);
     }
 }

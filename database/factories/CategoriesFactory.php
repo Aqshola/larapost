@@ -15,7 +15,7 @@ class CategoriesFactory extends Factory
     {
         return [
             "name" => $this->faker->sentence(mt_rand(1, 3)),
-            'slug' => $this->faker->sentence(mt_rand(1, 3))
+            'slug' => $this->faker->slug(mt_rand(1, 3))
         ];
     }
 }
