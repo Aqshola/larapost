@@ -7,7 +7,7 @@
             LaraPost
         </h1>
         <h2 class="text-center fw-normal">
-            {{ $title }}
+            {!! $title !!}
         </h2>
 
         @if ($posts->isEmpty())
@@ -28,7 +28,7 @@
                         <div class="col-md-5">
                             <div class="card-body ">
                                 <small class="text-decoration-none text-muted">By <a
-                                        href="/?author/{{ $posts[0]->user->username }}"
+                                        href="/?author={{ $posts[0]->user->username }}"
                                         class=" text-decoration-none">{{ $posts[0]->user->name }}</a>
                                     in <a href="/?category={{ $posts[0]->category->slug }}"
                                         class="text-decoration-none">{{ $posts[0]->category->name }}</a>
@@ -55,7 +55,7 @@
                 @foreach ($posts->skip(1) as $post)
                     <div class="col-md-3 mb-2 border-bottom p-2 pb-4 d-flex flex-column">
                         <div class="w-100 position-relative">
-                            <a href="/?category/{{ $post->category->slug }}"
+                            <a href="/?category={{ $post->category->slug }}"
                                 class="position-absolute text-decoration-none  fs-6 top-0 left-0 p-1 bg-danger text-light text-truncate col-5">{{ $post->category->name }}</a>
                             <img src="https://picsum.photos/seed/picsum/500" class="img-thumb w-100 rounded" alt="thumb"
                                 style="height: 200px; object-fit:cover;" loading="lazy">
@@ -64,7 +64,7 @@
                             <a href="/post/{{ $post->slug }}"
                                 class="text-decoration-none text-dark ">{{ $post->title }}</a>
                         </h2>
-                        <small class="text-decoration-none text-muted">By <a href="/?author/{{ $post->user->username }}"
+                        <small class="text-decoration-none text-muted">By <a href="/?author={{ $post->user->username }}"
                                 class="text-decoration-none">{{ $post->user->name }}</a>
                             {{ $post->created_at->diffForHumans() }}
                         </small>
@@ -79,6 +79,10 @@
 
             </div>
         @endif
+
+        <div class="d-flex justify-content-center">
+            {{ $posts->links() }}
+        </div>
 
 
 

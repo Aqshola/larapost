@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categories;
 use Illuminate\Http\Request;
 use App\Models\Posts;
+use App\Models\User;
 
 class PostController extends Controller
 {
@@ -15,16 +17,33 @@ class PostController extends Controller
         //     echo $post->body;
         // }
 
+        $title = "Semua post";
+
+        $search = "";
+
+        if (request('search')) {
+            $title = "";
+            $search = 'Hasil pencarian ' . '"' . request('search') . '"';
+        }
+
+        if (request('author')) {
+
+            $author = User::firstWhere('username', request('author'));
+            $title =
+                "Author " . '"<b>' . $author->name . '</b>"';
+        }
 
 
-        $searchQuery = request('search');
+        if (request('category')) {
+            $category = Categories::firstWhere('slug', request('category'));
 
-
-
+            $title =
+                "Category " . '<b>' . request('category') . '</b>';
+        }
 
         return view("index", [
-            "title" => $searchQuery ? 'Hasil pencarian ' . '"' . $searchQuery . '"' : "Semua Post",
-            "posts" => Posts::latest()->filter(request(['search']))->get()
+            "title" => request('search') ? $search . '</br>' . $title : $title,
+            "posts" => Posts::latest()->filter(request(['search', 'category', 'author']))->paginate(5)
         ]);
     }
 

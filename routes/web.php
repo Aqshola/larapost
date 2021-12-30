@@ -4,6 +4,8 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +24,12 @@ Route::get("/post/author/{user:username}", [AuthorController::class, "authorPost
 Route::get("/category", [CategoryController::class, "index"]);
 Route::get("/category/{category:slug}", [CategoryController::class, "categoryDetail"]);
 Route::get("/author", [AuthorController::class, "index"]);
+
+
+
+Route::get("/login", [LoginController::class, "index"]);
+Route::post("/login", [LoginController::class, "authenticate"]);
+
+
+
+Route::get("/register", [RegisterController::class, "index"]);

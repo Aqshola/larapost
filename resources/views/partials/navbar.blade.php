@@ -20,6 +20,10 @@
                     <a class="nav-link {{ request()->is('author*') ? 'active' : '' }}" aria-current="page"
                         href="/author">Author</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('login*') ? 'active' : '' }}" aria-current="page"
+                        href="/login">Login</a>
+                </li>
 
 
             </ul>
