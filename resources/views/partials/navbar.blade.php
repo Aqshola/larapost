@@ -20,26 +20,47 @@
                     <a class="nav-link {{ request()->is('author*') ? 'active' : '' }}" aria-current="page"
                         href="/author">Author</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->is('login*') ? 'active' : '' }}" aria-current="page"
-                        href="/login">Login</a>
-                </li>
-
-
             </ul>
-            <form class="d-flex" action="/">
-                @if (request('category'))
-                    <input type="hidden" name="category" value="{{ request('category') }}">
-                @endif
-                @if (request('author'))
-                    <input type="hidden" name="author" value="{{ request('author') }}">
-                @endif
-                <input class="form-control me-2" type="search" placeholder="Search" name="search" aria-label="Search">
-                <button class="btn btn-danger" type="submit">Search</button>
-            </form>
+
+
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                @auth
+                    <li class="nav-item dropdown ml-auto">
+                        <a class="text-dark text-decoration-none dropdown-toggle  fw-bolder" href="#" id="navbarDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Welcome Aqshola
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+
+                        </ul>
+                    </li>
+                @else
+
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('login*') ? 'active' : '' }}" aria-current="page"
+                            href="/login">Login</a>
+                    </li>
+                @endauth
+            </ul>
         </div>
     </div>
 </nav>
+<div class="container {{ request()->is('login*') || request()->is('register*') ? 'd-none' : '' }}">
+    <form class="d-flex col-md-5" action="/">
+        @if (request('category'))
+            <input type="hidden" name="category" value="{{ request('category') }}">
+        @endif
+        @if (request('author'))
+            <input type="hidden" name="author" value="{{ request('author') }}">
+        @endif
+        <input class="form-control me-2" type="search" placeholder="Search" name="search" aria-label="Search">
+        <button class="btn btn-danger" type="submit">Search</button>
+    </form>
+
+</div>
+
 
 
 <script>

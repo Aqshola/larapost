@@ -4,6 +4,7 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 
@@ -27,9 +28,11 @@ Route::get("/author", [AuthorController::class, "index"]);
 
 
 
-Route::get("/login", [LoginController::class, "index"]);
-Route::post("/login", [LoginController::class, "authenticate"]);
+Route::get("/login", [LoginController::class, "index"])->name('login')->middleware('guest');
+Route::post("/login", [LoginController::class, "authenticate"])->middleware('guest');
+Route::get("/logout", [LoginController::class, "logout"])->middleware('auth');
 
+Route::get("/register", [RegisterController::class, "index"])->middleware('guest');
+Route::post("/register", [RegisterController::class, "regist"])->middleware('guest');
 
-
-Route::get("/register", [RegisterController::class, "index"]);
+Route::get("/dashboard", [DashboardController::class, 'index'])->middleware('auth');
