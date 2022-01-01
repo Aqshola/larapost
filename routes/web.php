@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DashboardPostController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 
@@ -36,3 +37,4 @@ Route::get("/register", [RegisterController::class, "index"])->middleware('guest
 Route::post("/register", [RegisterController::class, "regist"])->middleware('guest');
 
 Route::get("/dashboard", [DashboardController::class, 'index'])->middleware('auth');
+Route::resource("/dashboard/posts", DashboardPostController::class)->middleware('auth');
