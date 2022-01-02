@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categories;
 use App\Models\Posts;
+use Cviebrock\EloquentSluggable\Services\SlugService;
+
 use Illuminate\Http\Request;
 
 class DashboardPostController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +19,7 @@ class DashboardPostController extends Controller
      */
     public function index()
     {
-        return view("dashboard.post", ["posts" => Posts::where('user_id', auth()->user()->id)->latest()->paginate(5)]);
+        return view("dashboard.posts.index", ["posts" => Posts::where('user_id', auth()->user()->id)->latest()->paginate(5)]);
     }
 
     /**
@@ -25,6 +30,11 @@ class DashboardPostController extends Controller
     public function create()
     {
         //
+
+
+        return view("dashboard.posts.create", [
+            "categories" => Categories::all(),
+        ]);
     }
 
     /**
@@ -35,7 +45,14 @@ class DashboardPostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validate = $request->validate(([
+            'title' => 'required|max:255',
+            'slug' => 'required|unique:posts',
+            'category_id' => 'required',
+            'body' => 'required'
+        ]));
+        return $request;
     }
 
     /**
@@ -44,9 +61,12 @@ class DashboardPostController extends Controller
      * @param  \App\Models\Posts  $posts
      * @return \Illuminate\Http\Response
      */
-    public function show(Posts $posts)
+    public function show(Posts $post)
     {
         //
+        return view("dashboard.posts.show", [
+            "post" => $post
+        ]);
     }
 
     /**
@@ -81,5 +101,13 @@ class DashboardPostController extends Controller
     public function destroy(Posts $posts)
     {
         //
+    }
+
+    public function checkSlug(Request $request)
+    {
+
+        $slug = SlugService::createSlug(Posts::class, 'slug', $request->title);
+
+        return response()->json(['slug' => $slug]);
     }
 }

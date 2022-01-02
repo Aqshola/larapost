@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Http\Request;
 
 class Posts extends Model
 {
     use HasFactory;
+    use Sluggable;
 
     protected $primaryKey = "id";
     protected $fillable = ["title", "excerpt", "body", "slug", "category_id", "user_id"];
@@ -49,6 +53,15 @@ class Posts extends Model
                 $query->where('username', $author);
             });
         });
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 
     public function getRouteKeyName()
