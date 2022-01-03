@@ -28,7 +28,7 @@
                     <li class="nav-item dropdown ml-auto">
                         <a class="text-dark text-decoration-none dropdown-toggle  fw-bolder" href="#" id="navbarDropdown"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Welcome Aqshola
+                            Welcome {{ auth()->user()->name }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>

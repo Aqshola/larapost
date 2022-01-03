@@ -55,6 +55,11 @@ class Posts extends Model
         });
     }
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function sluggable(): array
     {
         return [
@@ -62,10 +67,5 @@ class Posts extends Model
                 'source' => 'title'
             ]
         ];
-    }
-
-    public function getRouteKeyName()
-    {
-        return 'slug';
     }
 }

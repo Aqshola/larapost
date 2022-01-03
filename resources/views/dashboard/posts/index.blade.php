@@ -5,6 +5,12 @@
         <h1>My Posts</h1>
     </div>
 
+    @if (session()->has('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <a href="/dashboard/posts/create" class="btn btn-primary mb-3"> Create new post</a>
     <div class="table-responsive">
         <table class="table table-striped table-sm">
@@ -26,7 +32,14 @@
                             <a href="/dashboard/posts/{{ $post->slug }}" class="badge bg-primary"><span
                                     data-feather="eye"></span></a>
                             <a href="#" class="badge bg-warning"><span data-feather="edit"></span></a>
-                            <a href="#" class="badge bg-danger"><span data-feather="x-circle"></span></a>
+
+                            <form action="/dashboard/posts/{{ $post->slug }} " class="d-inline" method="POST">
+                                @method("delete")
+                                @csrf
+                                <button class="badge bg-danger border-0" onclick="return confirm('are you sure?')"><span
+                                        data-feather="x-circle"></span>
+                                </button>
+                            </form>
 
                         </td>
                     </tr>

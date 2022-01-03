@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Categories;
 use App\Models\Posts;
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Str;
 
 use Illuminate\Http\Request;
 
@@ -30,8 +31,6 @@ class DashboardPostController extends Controller
     public function create()
     {
         //
-
-
         return view("dashboard.posts.create", [
             "categories" => Categories::all(),
         ]);
@@ -52,7 +51,15 @@ class DashboardPostController extends Controller
             'category_id' => 'required',
             'body' => 'required'
         ]));
-        return $request;
+
+        $validate['user_id'] = auth()->user()->id;
+        $validate['excerpt'] = Str::limit(strip_tags($request->body), 50);
+
+
+        $createPost = Posts::create($validate);
+        if ($createPost) {
+            return redirect("/dashboard/posts")->with("success", "New post has been added");
+        }
     }
 
     /**
@@ -98,9 +105,13 @@ class DashboardPostController extends Controller
      * @param  \App\Models\Posts  $posts
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Posts $posts)
+    public function destroy(Posts $post)
     {
-        //
+
+
+
+        Posts::destroy($post->id);
+        return redirect("/dashboard/posts")->with("success", "post '" . $post->title . "' has been deleted");
     }
 
     public function checkSlug(Request $request)
