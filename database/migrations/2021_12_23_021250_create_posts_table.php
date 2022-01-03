@@ -20,7 +20,8 @@ class CreatePostsTable extends Migration
             $table->string('slug', 100)->unique()->nullable();
             $table->foreignId('category_id');
             $table->foreignId('user_id');
-            $table->text('body')->nullable();
+            $table->string('image')->nullable();
+            $table->text('body');
             $table->timestamp('published_at')->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrent();

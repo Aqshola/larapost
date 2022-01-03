@@ -14,7 +14,7 @@ class Posts extends Model
     use Sluggable;
 
     protected $primaryKey = "id";
-    protected $fillable = ["title", "excerpt", "body", "slug", "category_id", "user_id"];
+    protected $fillable = ["title", "excerpt", "body", "slug", "category_id", "user_id", "image"];
     protected $with = ['category', 'user'];
 
 

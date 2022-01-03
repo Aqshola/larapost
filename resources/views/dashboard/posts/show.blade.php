@@ -18,6 +18,14 @@
         </span>
 
 
+        @if ($post->image)
+            <div style="max-height: 300px" class="overflow-hidden">
+                <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid mt-3 mb-2 w-100" alt="post illust"
+                    style="object-fit: cover">
+            </div>
+        @endif
+
+
 
         <p class="mt-2">
             {!! $post->body !!}

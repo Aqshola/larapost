@@ -18,11 +18,19 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md 7">
-                            <div class="position-relative">
+                            @if ($posts[0]->image)
+                                <div class="position-relative">
+                                    <img src="{{ asset('storage/' . $posts[0]->image) }}" class="img-thumb w-100 rounded"
+                                        alt="thumb" style="height: 300px; object-fit:cover;">
+                                </div>
 
-                                <img src="https://picsum.photos/seed/picsum/1000" class="img-thumb w-100 rounded" alt="thumb"
-                                    style="height: 300px; object-fit:cover;">
-                            </div>
+                            @else
+
+                                <div class="position-relative">
+                                    <img src="https://picsum.photos/seed/picsum/1000" class="img-thumb w-100 rounded"
+                                        alt="thumb" style="height: 300px; object-fit:cover;">
+                                </div>
+                            @endif
 
                         </div>
                         <div class="col-md-5">
@@ -56,9 +64,18 @@
                     <div class="col-md-3 mb-2 border-bottom p-2 pb-4 d-flex flex-column">
                         <div class="w-100 position-relative">
                             <a href="/?category={{ $post->category->slug }}"
-                                class="position-absolute text-decoration-none  fs-6 top-0 left-0 p-1 bg-danger text-light text-truncate col-5">{{ $post->category->name }}</a>
-                            <img src="https://picsum.photos/seed/picsum/500" class="img-thumb w-100 rounded" alt="thumb"
-                                style="height: 200px; object-fit:cover;" loading="lazy">
+                                class="position-absolute text-decoration-none fs-6 top-0 left-0 p-1 bg-danger text-light text-truncate"
+                                style="width: fit-content; max-width:200px">{{ $post->category->name }}</a>
+
+                            @if ($post->image)
+                                <img src="{{ asset('storage/' . $post->image) }}" class="img-thumb w-100 rounded"
+                                    alt="thumb" style="height: 200px; object-fit:cover;" loading="lazy">
+
+                            @else
+
+                                <img src="https://picsum.photos/seed/picsum/500" class="img-thumb w-100 rounded" alt="thumb"
+                                    style="height: 200px; object-fit:cover;" loading="lazy">
+                            @endif
                         </div>
                         <h2 class="fs-4">
                             <a href="/post/{{ $post->slug }}"

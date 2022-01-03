@@ -43,14 +43,20 @@ class DashboardPostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-
+    {;
         $validate = $request->validate(([
             'title' => 'required|max:255',
             'slug' => 'required|unique:posts',
             'category_id' => 'required',
-            'body' => 'required'
+            'body' => 'required',
+            'image' => 'required|file|max:1024',
         ]));
+
+        if ($request->file('image')) {
+            $validate['image'] = $request->file('image')->store('larapost-images');
+        }
+
+
 
         $validate['user_id'] = auth()->user()->id;
         $validate['excerpt'] = Str::limit(strip_tags($request->body), 50);
