@@ -82,9 +82,12 @@ class DashboardPostController extends Controller
      * @param  \App\Models\Posts  $posts
      * @return \Illuminate\Http\Response
      */
-    public function edit(Posts $posts)
+    public function edit(Posts $post)
     {
-        //
+        return view("dashboard.posts.edit", [
+            "post" => $post,
+            "categories" => Categories::all(),
+        ]);
     }
 
     /**
@@ -94,9 +97,32 @@ class DashboardPostController extends Controller
      * @param  \App\Models\Posts  $posts
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Posts $posts)
+    public function update(Request $request, Posts $post)
     {
-        //
+
+        $rules = [
+            'title' => 'required|max:255',
+            'category_id' => 'required',
+            'body' => 'required'
+        ];
+
+        if ($request->slug != $post->slug) {
+            $rules["slug"] = 'required|unique:posts';
+        }
+
+        $validate = $request->validate($rules);
+
+        $validate['user_id'] = auth()->user()->id;
+        $validate['excerpt'] = Str::limit(strip_tags($request->body), 50);
+
+
+        $validate['user_id'] = auth()->user()->id;
+        $validate['excerpt'] = Str::limit(strip_tags($request->body), 50);
+        $updatePost = Posts::where('id', $post->id)->update($validate);
+
+        if ($updatePost) {
+            return redirect("/dashboard/posts")->with("success", "post '" . $post->title . "' has been updated");
+        }
     }
 
     /**
