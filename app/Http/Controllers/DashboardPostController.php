@@ -119,13 +119,6 @@ class DashboardPostController extends Controller
             $rules["slug"] = 'required|unique:posts';
         }
 
-
-
-
-
-
-
-
         $validate = $request->validate($rules);
 
 
@@ -162,7 +155,9 @@ class DashboardPostController extends Controller
     {
 
 
-
+        if ($post->image) {
+            Storage::delete($post->image);
+        }
         Posts::destroy($post->id);
         return redirect("/dashboard/posts")->with("success", "post '" . $post->title . "' has been deleted");
     }
