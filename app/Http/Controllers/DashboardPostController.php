@@ -8,6 +8,7 @@ use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Str;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardPostController extends Controller
 {
@@ -49,7 +50,7 @@ class DashboardPostController extends Controller
             'slug' => 'required|unique:posts',
             'category_id' => 'required',
             'body' => 'required',
-            'image' => 'required|file|max:1024',
+            'image' => 'file|max:1024',
         ]));
 
         if ($request->file('image')) {
@@ -109,14 +110,34 @@ class DashboardPostController extends Controller
         $rules = [
             'title' => 'required|max:255',
             'category_id' => 'required',
-            'body' => 'required'
+            'body' => 'required',
+            'image' => 'file|max:1024',
         ];
+
 
         if ($request->slug != $post->slug) {
             $rules["slug"] = 'required|unique:posts';
         }
 
+
+
+
+
+
+
+
         $validate = $request->validate($rules);
+
+
+        if ($request->file('image')) {
+            Storage::delete($post->image);
+            $validate['image'] = $request->file('image')->store('larapost-images');
+        }
+
+        if ($request->image_status == "delete") {
+            Storage::delete($post->image);
+            $validate['image'] = null;
+        }
 
         $validate['user_id'] = auth()->user()->id;
         $validate['excerpt'] = Str::limit(strip_tags($request->body), 50);

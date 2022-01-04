@@ -6,7 +6,7 @@
     </div>
 
     <div class="col-md-7">
-        <form method="post" action="/dashboard/posts/{{ $post->slug }}">
+        <form method="post" action="/dashboard/posts/{{ $post->slug }}" enctype="multipart/form-data">
             @method("put")
             @csrf
             <div class="mb-3">
@@ -56,6 +56,36 @@
             </div>
 
             <div class="mb-3">
+                <input type="hidden" name="image_status" id="image-status">
+                <label for="image" class="form-label">Post Image</label>
+                <input class="form-label @error('image')
+                    is-invalid
+                @enderror"
+                    type="file" id="image" name="image">
+
+                @error('image')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+
+
+                @if ($post->image)
+
+                    <div>
+                        <img src="{{ asset('storage/' . $post->image) }}" id="preview" class="img-thumb border rounded"
+                            alt="thumb" style="height: 300px; object-fit:cover; width:300px;">
+                    </div>
+                @else
+                    <div>
+                        <img id="preview" class="img-thumb border rounded hide" alt="thumb"
+                            style="height: 300px; object-fit:cover; width:300px;">
+                    </div>
+
+                @endif
+                <button class="btn btn-danger btn-sm  {{ $post->image ? '' : 'hide' }}" id="clear-image">Clear post
+                    image</button>
+            </div>
+
+            <div class="mb-3">
                 <label for="body" class="form-label">Content</label>
                 <input id="body" type="hidden" name="body" for="slug" value="{{ old('body', $post->body) }}"
                     class="form-label @error('body')
@@ -78,11 +108,23 @@
 @endsection
 
 
+<style>
+    .hide {
+        display: none;
+    }
+
+</style>
+
 <script>
     window.onload = () => {
 
         const title = document.getElementById("title")
         const slug = document.getElementById("slug")
+        const image = document.getElementById("image")
+        const preview = document.getElementById("preview")
+        const clear_image = document.getElementById("clear-image")
+        const image_status = document.getElementById("image-status")
+
 
         title.addEventListener('change', function() {
             fetch('/dashboard/posts/checkSlug?title=' + title.value).then(res => res.json()).then(data =>
@@ -92,5 +134,23 @@
         document.addEventListener('trix-file-accept', function(e) {
             e.preventDefault()
         })
+
+        image.addEventListener("change", (e) => {
+            let uri = URL.createObjectURL(e.target.files[0]);
+
+            preview.setAttribute("src", uri);
+            preview.style.display = "flex";
+            image_status.value = "stay"
+        });
+
+        clear_image.addEventListener('click', (e) => {
+            e.preventDefault()
+            image.value = ""
+            preview.style.display = "none"
+            clear_image.style.display = "none"
+            image_status.value = "delete"
+        })
+
+
     }
 </script>

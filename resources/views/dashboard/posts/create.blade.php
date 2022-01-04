@@ -54,6 +54,7 @@
             </div>
 
             <div class="mb-3">
+
                 <label for="image" class="form-label">Post Image</label>
                 <input class="form-label @error('image')
                     is-invalid
@@ -63,7 +64,16 @@
                 @error('image')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
+
+                <div>
+                    <img id="preview" class="img-thumb border rounded" alt="thumb"
+                        style="height: 300px; object-fit:cover; width:300px;">
+                </div>
+
+                <button class="btn btn-danger btn-sm" id="clear-image">Clear post image</button>
+
             </div>
+
             <div class="mb-3">
                 <label for="body" class="form-label">Content</label>
                 <input id="body" type="hidden" name="body" for="slug"
@@ -87,11 +97,27 @@
 @endsection
 
 
+
+<style>
+    #preview {
+        display: none;
+    }
+
+    #clear-image {
+        display: none;
+    }
+
+</style>
+
 <script>
     window.onload = () => {
 
         const title = document.getElementById("title")
         const slug = document.getElementById("slug")
+        const image = document.getElementById("image")
+        const preview = document.getElementById("preview")
+        const clear_image = document.getElementById("clear-image")
+
 
         title.addEventListener('change', function() {
             fetch('/dashboard/posts/checkSlug?title=' + title.value).then(res => res.json()).then(data =>
@@ -100,6 +126,21 @@
 
         document.addEventListener('trix-file-accept', function(e) {
             e.preventDefault()
+        })
+
+        image.addEventListener("change", (e) => {
+            let uri = URL.createObjectURL(e.target.files[0]);
+
+            preview.setAttribute("src", uri);
+            preview.style.display = "flex";
+            clear_image.style.display = "flex";
+        });
+
+        clear_image.addEventListener('click', (e) => {
+            e.preventDefault()
+            image.value = ""
+            preview.style.display = "none"
+            clear_image.style.display = "none"
         })
     }
 </script>
