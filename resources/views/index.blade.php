@@ -25,7 +25,6 @@
                                 </div>
 
                             @else
-
                                 <div class="position-relative">
                                     <img src="https://picsum.photos/seed/picsum/1000" class="img-thumb w-100 rounded"
                                         alt="thumb" style="height: 300px; object-fit:cover;">

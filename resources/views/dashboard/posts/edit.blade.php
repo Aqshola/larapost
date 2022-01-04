@@ -81,7 +81,7 @@
                     </div>
 
                 @endif
-                <button class="btn btn-danger btn-sm  {{ $post->image ? '' : 'hide' }}" id="clear-image">Clear post
+                <button class="btn-danger btn-sm  {{ $post->image ? 'btn' : 'hide' }}" id="clear-image">Clear post
                     image</button>
             </div>
 
@@ -137,10 +137,10 @@
 
         image.addEventListener("change", (e) => {
             let uri = URL.createObjectURL(e.target.files[0]);
-
             preview.setAttribute("src", uri);
             preview.style.display = "flex";
             image_status.value = "stay"
+            clear_image.classList.add("btn");
         });
 
         clear_image.addEventListener('click', (e) => {
@@ -149,6 +149,7 @@
             preview.style.display = "none"
             clear_image.style.display = "none"
             image_status.value = "delete"
+            clear_image.classList.remove("btn");
         })
 
 
