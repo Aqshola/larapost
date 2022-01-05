@@ -26,8 +26,8 @@
 
                             @else
                                 <div class="position-relative">
-                                    <img src="https://picsum.photos/seed/picsum/1000" class="img-thumb w-100 rounded"
-                                        alt="thumb" style="height: 300px; object-fit:cover;">
+                                    <img src="/asset/Larapost.png" class="img-thumb w-100 rounded" alt="thumb"
+                                        style="height: 300px; object-fit:cover;">
                                 </div>
                             @endif
 
@@ -69,10 +69,9 @@
                             @if ($post->image)
                                 <img src="{{ asset('storage/' . $post->image) }}" class="img-thumb w-100 rounded"
                                     alt="thumb" style="height: 200px; object-fit:cover;" loading="lazy">
-
                             @else
 
-                                <img src="https://picsum.photos/seed/picsum/500" class="img-thumb w-100 rounded" alt="thumb"
+                                <img src="/asset/Larapost.png" class="img-thumb w-100 rounded" alt="thumb"
                                     style="height: 200px; object-fit:cover;" loading="lazy">
                             @endif
                         </div>
