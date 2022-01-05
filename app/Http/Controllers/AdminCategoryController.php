@@ -51,18 +51,10 @@ class AdminCategoryController extends Controller
      */
     public function store(Request $request)
     {
-
-
         $validate = $request->validate(([
             'category' => 'required|max:255',
 
         ]));
-
-
-
-
-
-
         Categories::create([
             "name" =>  $validate["category"],
             "slug" => SlugService::createSlug(Categories::class, 'slug', $request->category)
@@ -89,9 +81,12 @@ class AdminCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Categories $category)
     {
         //
+        return view('dashboard.categories.edit', [
+            "category" => $category
+        ]);
     }
 
     /**
@@ -101,9 +96,31 @@ class AdminCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Categories $category)
+
     {
-        //
+
+        $validate = $request->validate(([
+            'category' => 'required|max:255',
+        ]));
+
+
+
+
+        if ($validate['category'] == $category->name) {
+            toast('Duplicate category name', 'warning');
+
+            return back();
+        } else {
+            $newSlug = SlugService::createSlug(Categories::class, 'slug', $request->category);
+            Categories::where('id', $category->id)->update([
+                "name" => $validate['category'],
+                "slug" => $newSlug == $category->slug ? $category->slug : $newSlug,
+            ]);
+
+            toast($category->name . " has been updated", 'success');
+            return redirect("/dashboard/categories");
+        }
     }
 
     /**
@@ -112,8 +129,10 @@ class AdminCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Categories $category)
     {
-        //
+        Categories::destroy($category->id);
+        toast("category '" . $category->name . "' has been deleted", 'success');
+        return redirect("/dashboard/categories");
     }
 }

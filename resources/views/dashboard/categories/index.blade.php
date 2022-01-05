@@ -1,8 +1,5 @@
 @extends('dashboard.layouts.DashboardLayout')
 
-
-
-
 @section('container')
 
     @include('sweetalert::alert')
@@ -26,11 +23,14 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $category->name }}</td>
                         <td>
-                            <a href="#" class="badge bg-warning"><span data-feather="edit"></span></a>
-                            <form action="#" class="d-inline" method="POST">
-                                {{-- @method("delete") --}}
+                            <a href="/dashboard/categories/{{ $category->slug }}/edit" class="badge bg-warning"><span
+                                    data-feather="edit"></span></a>
+                            <form action="/dashboard/categories/{{ $category->slug }}" class="d-inline"
+                                id="del-{{ $category->id }}" method="POST">
+                                @method("delete")
                                 @csrf
-                                <button class="badge bg-danger border-0" onclick="return confirm('are you sure?')"><span
+                                <button type="button" class="badge bg-danger border-0" id="delete-btn"
+                                    onclick="confirmDelete(this)" data-delete="del-{{ $category->id }}"><span
                                         data-feather="x-circle"></span>
                                 </button>
                             </form>
@@ -66,13 +66,29 @@
                         <button class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
                     </form>
                 </div>
-                {{-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div> --}}
+
             </div>
         </div>
     </div>
 
 
 @endsection
+<script>
+    function confirmDelete(e) {
+
+        const form = e.dataset.delete
+        Swal.fire({
+            title: 'Are you sure delete this category?',
+
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            confirmButtonColor: '#d33',
+            denyButtonText: `Cancel`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.value) {
+                document.getElementById(form).submit()
+            }
+        })
+    }
+</script>

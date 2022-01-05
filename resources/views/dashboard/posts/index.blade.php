@@ -32,11 +32,12 @@
                                     data-feather="edit"></span></a>
 
                             <form action="/dashboard/posts/{{ $post->slug }} " class="d-inline" method="POST"
-                                id="del-form">
+                                id="del-{{ $post->id }}">
                                 @method("delete")
                                 @csrf
-                                <button type="button" id="delete-btn" onclick="confirmDelete()"
-                                    class="badge bg-danger border-0"><span data-feather="x-circle"></span>
+                                <button type="button" id="delete-btn" onclick="confirmDelete(this)"
+                                    data-delete="del-{{ $post->id }}" class="badge bg-danger border-0"><span
+                                        data-feather="x-circle"></span>
                                 </button>
                             </form>
 
@@ -51,12 +52,9 @@
 
 
 <script>
-    window.onload = () => {
-        const delbtn = document.getElementById("delete-btn")
-        console.log(delbtn)
-    }
+    const confirmDelete = (e) => {
 
-    function confirmDelete() {
+        const form = e.dataset.delete
         Swal.fire({
             title: 'Are you sure delete this post?',
 
@@ -67,7 +65,7 @@
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.value) {
-                document.getElementById("del-form").submit()
+                document.getElementById(form).submit()
             }
         })
     }
