@@ -9,6 +9,9 @@ use Illuminate\Support\Str;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use RealRashid\SweetAlert\Facades\Alert;
+
+
 
 class DashboardPostController extends Controller
 {
@@ -20,7 +23,10 @@ class DashboardPostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+
     {
+
+
         return view("dashboard.posts.index", ["posts" => Posts::where('user_id', auth()->user()->id)->latest()->paginate(5)]);
     }
 
@@ -65,7 +71,8 @@ class DashboardPostController extends Controller
 
         $createPost = Posts::create($validate);
         if ($createPost) {
-            return redirect("/dashboard/posts")->with("success", "New post has been added");
+            toast('New Post has been added', 'success');
+            return redirect("/dashboard/posts");
         }
     }
 
@@ -141,7 +148,8 @@ class DashboardPostController extends Controller
         $updatePost = Posts::where('id', $post->id)->update($validate);
 
         if ($updatePost) {
-            return redirect("/dashboard/posts")->with("success", "post '" . $post->title . "' has been updated");
+            toast("post '" . $post->title . "' has been updated", 'success');
+            return redirect("/dashboard/posts");
         }
     }
 
@@ -153,13 +161,12 @@ class DashboardPostController extends Controller
      */
     public function destroy(Posts $post)
     {
-
-
         if ($post->image) {
             Storage::delete($post->image);
         }
         Posts::destroy($post->id);
-        return redirect("/dashboard/posts")->with("success", "post '" . $post->title . "' has been deleted");
+        toast("post '" . $post->title . "' has been deleted", 'success');
+        return redirect("/dashboard/posts");
     }
 
     public function checkSlug(Request $request)

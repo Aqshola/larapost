@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Categories extends Model
 {
     use HasFactory;
+    use Sluggable;
 
 
     protected $primaryKey = "id";
@@ -16,5 +18,14 @@ class Categories extends Model
     public function post()
     {
         return $this->hasMany(Posts::class, "category_id");
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
     }
 }

@@ -28,12 +28,14 @@
     <link href="/css/dashboard.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/trix.css">
     <script type="text/javascript" src="/js/trix.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
 
 </head>
 
 <body>
 
+    @include('sweetalert::alert')
     @include("dashboard.partials.DashboardNav")
 
     <div class="container-fluid">
