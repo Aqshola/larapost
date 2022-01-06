@@ -76,8 +76,8 @@
 
             <div class="mb-3">
                 <label for="body" class="form-label">Content</label>
-                <input id="body" type="hidden" name="body" for="slug"
-                    class="form-label @error('slug')
+                <input id="body" type="hidden" name="body" for="body"
+                    class="form-label @error('body')
                     is-invalid
                 @enderror">
 

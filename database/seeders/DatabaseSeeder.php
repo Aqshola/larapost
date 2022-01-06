@@ -20,6 +20,6 @@ class DatabaseSeeder extends Seeder
 
         Categories::factory(5)->create();
 
-        Posts::factory(20)->create();
+        Posts::factory(200)->create();
     }
 }

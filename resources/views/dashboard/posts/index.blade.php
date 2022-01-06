@@ -8,45 +8,48 @@
     </div>
 
 
-    <a href="/dashboard/posts/create" class="btn btn-primary mb-3"> Create new post</a>
-    <div class="table-responsive">
-        <table class="table table-striped table-sm">
-            <thead>
+    <a href="/dashboard/posts/create" class="btn btn-primary mb-5"> Create new post</a>
+    <table id="myTable" class="table table-striped  dt-responsive nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($posts as $post)
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Action</th>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $post->title }}</td>
+                    <td>{{ $post->category->name }}</td>
+                    <td>{{ $post->created_at }}</td>
+                    <td>{{ $post->updated_at }}</td>
+                    <td>
+                        <a href="/dashboard/posts/{{ $post->slug }}" class="badge bg-primary"><span
+                                data-feather="eye"></span></a>
+                        <a href="/dashboard/posts/{{ $post->slug }}/edit" class="badge bg-warning"><span
+                                data-feather="edit"></span></a>
+
+                        <form action="/dashboard/posts/{{ $post->slug }} " class="d-inline" method="POST"
+                            id="del-{{ $post->id }}">
+                            @method("delete")
+                            @csrf
+                            <button type="button" id="delete-btn" onclick="confirmDelete(this)"
+                                data-delete="del-{{ $post->id }}" class="badge bg-danger border-0"><span
+                                    data-feather="x-circle"></span>
+                            </button>
+                        </form>
+
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach ($posts as $post)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $post->title }}</td>
-                        <td>{{ $post->category->name }}</td>
-                        <td>
-                            <a href="/dashboard/posts/{{ $post->slug }}" class="badge bg-primary"><span
-                                    data-feather="eye"></span></a>
-                            <a href="/dashboard/posts/{{ $post->slug }}/edit" class="badge bg-warning"><span
-                                    data-feather="edit"></span></a>
+            @endforeach
+        </tbody>
+    </table>
 
-                            <form action="/dashboard/posts/{{ $post->slug }} " class="d-inline" method="POST"
-                                id="del-{{ $post->id }}">
-                                @method("delete")
-                                @csrf
-                                <button type="button" id="delete-btn" onclick="confirmDelete(this)"
-                                    data-delete="del-{{ $post->id }}" class="badge bg-danger border-0"><span
-                                        data-feather="x-circle"></span>
-                                </button>
-                            </form>
-
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
 
 @endsection
 
