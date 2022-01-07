@@ -1,5 +1,26 @@
 @extends('dashboard.layouts.DashboardLayout')
 
+
+
+@push('script')
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                responsive: true,
+                columnDefs: [{
+                        responsivePriority: 1,
+                        targets: 1
+                    },
+                    {
+                        responsivePriority: 2,
+                        targets: -1
+                    }
+                ]
+            });
+
+        });
+    </script>
+@endpush
 @section('container')
 
 

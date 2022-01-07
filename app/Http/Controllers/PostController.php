@@ -43,7 +43,7 @@ class PostController extends Controller
 
         return view("index", [
             "title" => request('search') ? $search . '</br>' . $title : $title,
-            "posts" => Posts::latest()->filter(request(['search', 'category', 'author']))->paginate(5)
+            "posts" => Posts::latest()->filter(request(['search', 'category', 'author']))->paginate(10)
         ]);
     }
 

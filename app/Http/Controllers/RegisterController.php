@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -29,8 +30,10 @@ class RegisterController extends Controller
         $createUser = User::create($credentials);
 
         if ($createUser) {
-            auth()->login($createUser);
-            return redirect("/dashboard");
+            // auth()->login($createUser);
+            toast('Email verification has been sent', 'success');
+            event(new Registered($createUser));
+            return redirect("/register");
         }
     }
 }

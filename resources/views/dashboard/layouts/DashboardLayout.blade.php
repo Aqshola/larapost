@@ -7,12 +7,6 @@
 
     <title>Dashboard Larapost</title>
 
-
-
-
-
-    <!-- Bootstrap core CSS -->
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -20,11 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>Larapost</title>
 
-
-
-    <!-- Custom styles for this template -->
     <link href="/css/dashboard.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/trix.css">
     <script type="text/javascript" src="/js/trix.js"></script>
@@ -35,25 +25,7 @@
     <script type="text/javascript"
         src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.11.3/r-2.2.9/sl-1.3.4/datatables.min.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            $('#myTable').DataTable({
-                responsive: true,
-                columnDefs: [{
-                        responsivePriority: 1,
-                        targets: 1
-                    },
-                    {
-                        responsivePriority: 2,
-                        targets: -1
-                    }
-                ]
-            });
-
-        });
-    </script>
-
-
+    @stack('script')
 </head>
 
 <body>
@@ -81,8 +53,6 @@
         integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous">
     </script>
     <script src="/js/dashboard.js"></script>
-
-
 </body>
 
 </html>
