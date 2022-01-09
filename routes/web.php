@@ -23,38 +23,46 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 */
 
 Route::get('/', [PostController::class, "index"]);
-Route::get("/post/{post:slug}", [PostController::class, "postDetail"]);
-Route::get("/post/author/{user:username}", [AuthorController::class, "authorPost"]);
-Route::get("/category", [CategoryController::class, "index"]);
-Route::get("/category/{category:slug}", [CategoryController::class, "categoryDetail"]);
 Route::get("/author", [AuthorController::class, "index"]);
 
+Route::prefix("post")->group(function () {
+    Route::get("/{post:slug}", [PostController::class, "postDetail"]);
+    Route::get("/author/{user:username}", [AuthorController::class, "authorPost"]);
+});
+
+Route::prefix("category")->group(function () {
+    Route::get("/", [CategoryController::class, "index"]);
+    Route::get("/{category:slug}", [CategoryController::class, "categoryDetail"]);
+});
+
+Route::middleware('guest')->group(function () {
+    Route::post("/login", [LoginController::class, "authenticate"])->middleware('guest');
+    Route::get("/login", [LoginController::class, "index"])->name('login')->middleware('guest');
+    Route::get("/register", [RegisterController::class, "index"])->middleware('guest');
+    Route::post("/register", [RegisterController::class, "regist"])->middleware('guest');
+});
 
 
-Route::get("/login", [LoginController::class, "index"])->name('login')->middleware('guest');
-Route::post("/login", [LoginController::class, "authenticate"])->middleware('guest');
-Route::get("/logout", [LoginController::class, "logout"])->middleware('auth');
-
-Route::get("/register", [RegisterController::class, "index"])->middleware('guest');
-Route::post("/register", [RegisterController::class, "regist"])->middleware('guest');
-
-Route::get("/dashboard", [DashboardController::class, 'index'])->middleware('auth')->middleware('verified');
-Route::get("/dashboard/posts/checkSlug", [DashboardPostController::class, "checkSlug"])->middleware("auth");
-Route::resource("/dashboard/posts", DashboardPostController::class)->middleware('auth');
+Route::middleware('auth')->group(function () {
+    Route::get("/logout", [LoginController::class, "logout"])->middleware('auth');
+    Route::get("/dashboard", [DashboardController::class, 'index'])->middleware('auth')->middleware('verified');
+    Route::get("/dashboard/posts/checkSlug", [DashboardPostController::class, "checkSlug"])->middleware("auth");
+    Route::resource("/dashboard/posts", DashboardPostController::class)->middleware('auth');
+    Route::resource("/dashboard/categories", AdminCategoryController::class)->except('show')->middleware('can:admin');
 
 
-Route::resource("/dashboard/categories", AdminCategoryController::class)->except('show')->middleware('can:admin');
+    /**
+     * Route buat email verification (ditunda)
+     */
 
+    // Route::get('/email/verify', function () {
+    //     return view('auth.verify-email');
+    // })->middleware('auth')->name('verification.notice');
 
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
+    // Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    //     $request->fulfill();
 
+    //     return redirect('/home');
+    // })->middleware(['auth', 'signed'])->name('verification.verify');
 
-
-
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-
-    return redirect('/home');
-})->middleware(['auth', 'signed'])->name('verification.verify');
+});

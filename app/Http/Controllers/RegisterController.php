@@ -30,9 +30,14 @@ class RegisterController extends Controller
         $createUser = User::create($credentials);
 
         if ($createUser) {
-            // auth()->login($createUser);
-            toast('Email verification has been sent', 'success');
-            event(new Registered($createUser));
+            auth()->login($createUser);
+
+            /**
+             * Percobaan bikin email verification
+             */
+
+            // toast('Email verification has been sent', 'success');
+            // event(new Registered($createUser));
             return redirect("/register");
         }
     }
